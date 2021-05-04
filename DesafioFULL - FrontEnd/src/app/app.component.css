@@ -1,0 +1,54 @@
+body {
+  /* background-color: var(--background); */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-family: "Poppins", "sans-serif";
+  box-sizing: border-box;
+}
+
+header {
+  background: var(--custon-color);
+  padding: 2rem 0 2rem;
+  text-align: center;
+}
+
+h2 {
+  margin-top: 2px;
+  margin-bottom: 0.8rem;
+  color: var(--custon-char);
+  font-weight: normal;
+}
+
+.logoDetail {
+  color: var(--light-green);
+}
+
+main {
+  margin: auto;
+  width: 85vw;
+  height: 80%;
+}
+
+/* Links & Buttons ================ */
+
+a {
+  color: var(--green);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--light-green);
+}
+
+
+
+footer {
+ 
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--custon-color);
+  color: white;
+  text-align: center;
+}

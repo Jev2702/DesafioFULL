@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --dark-blue: #363f5f;
+    --green: #49aa26;
+    --light-green: #3dd705;
+    --red: #354452;
+    --custon-color: #9466ff;
+    --background:rgb(92, 78, 78);
+    --custon-card: #44424d;
+    --custon-char: #ffffff;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

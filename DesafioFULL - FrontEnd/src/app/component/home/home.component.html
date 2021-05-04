@@ -1,0 +1,150 @@
+<section id="dividas">
+  <a href="#" (click)="open($event)" class="addDivida">+ Nova Dívida</a>
+  <!-- cadastro nova divida -->
+  <mat-spinner *ngIf="loading"></mat-spinner>
+  <div class="modal-overlay active">
+    <div class="modal">
+      <div id="form">
+        <form (ngSubmit)="onSubmit()" class="custom-form">
+
+          <div class="input-group">
+            <label for="titulo">Título *</label>
+            <input type="text" [(ngModel)]="cod_Titulo" name="titulo" id="titulo" placeholder="Numero do titulo"
+              type="number" />
+          </div>
+          <div class="input-group">
+            <label for="nome">Nome do devedor *</label>
+            <input type="text" [(ngModel)]="devedor" name="nome" id="nome" placeholder="Nome" />
+          </div>
+          <div class="input-group">
+            <label for="cpf">CPF *</label>
+            <input type="text" [ngModel]="cpf" name="cpf" id="cpf" placeholder="CPF"
+              (ngModelChange)="changeCpf($event)" />
+          </div>
+          <div class="input-group">
+            <label for="juros">Multa % *</label>
+            <input type="number" [(ngModel)]="multa" name="multa" id="multa" placeholder="Multa %" />
+          </div>
+          <div class="input-group">
+            <label for="juros">Juros % *</label>
+            <input type="number" [(ngModel)]="juros" name="juros" id="juros" placeholder="Juros %" />
+          </div>
+          <label>* Campos Obrigatorios e adicione no mínimo uma parcela!</label>
+
+          <div class="parcelas">
+            <div class="input-group">
+              <label for="parcela">Parcela</label>
+              <input type="number" [(ngModel)]="numParcela" name="parcela" id="parcela" placeholder="N° Parcela"
+                disabled />
+            </div>
+            <div class="input-group">
+              <label for="date">Data Vencimento</label>
+              <input type="date" [(ngModel)]="dataParcela" name="date" id="date">
+            </div>
+            <div class="input-group">
+              <label for="valorParcela">Valor da Parcela R$</label>
+              <input type="number" [(ngModel)]="valorParcela" step="0.01" name="valorParcela" id="valorParcela"
+                placeholder="0,00" />
+            </div>
+            <a href="#" (click)="addParcela($event)" class="button">+ Add</a>
+          </div>
+          <table id="parcelas_tab">
+            <thead>
+              <tr>
+                <th>N° Parcela</th>
+                <th>Data Vencimento.</th>
+                <th>Valor Parcela</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let reg of parcelas">
+                <td>{{reg.Parcela_Numero}}</td>
+                <td>{{reg.Data}}</td>
+                <td>{{reg.Valor}}</td>
+                <td>
+
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="input-group actions">
+            <button (click)="close($event)" class="button cancel">Cancelar</button>
+            <button class="button" type="submit">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Lista todas as dividas -->
+  <div *ngIf="data?.length > 0; then view_table else view_msg"></div>
+  <ng-template #view_table>
+    <mat-accordion>
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <div class="divPanel">
+            <mat-panel-title>
+              Titulo
+            </mat-panel-title>
+          </div>
+          <div class="divPanel">
+            <mat-panel-title>
+              Devedor
+            </mat-panel-title>
+          </div>
+          <div class="divPanel">
+            <mat-panel-description>
+              Cpf Devedor
+            </mat-panel-description>
+          </div>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+      <mat-expansion-panel *ngFor="let reg of data" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <div class="divPanel">
+            <mat-panel-title>
+              {{reg.Cod_Titulo}}
+            </mat-panel-title>
+          </div>
+          <div class="divPanel">
+            <mat-panel-title>
+              {{reg.Devedor}}
+            </mat-panel-title>
+          </div>
+          <div class="divPanel">
+            <mat-panel-title>
+              {{reg.Cpf_Devedor}}
+            </mat-panel-title>
+          </div>
+        </mat-expansion-panel-header>
+        <div mat-subheader>Detalhes</div>
+        <br>
+        <mat-list-item>
+          <div mat-line>Quantidade de Parcelas: {{reg.Parcelas?.length}}</div>
+          <div mat-line>Valor original: R${{reg.valor_original}}</div>
+          <div mat-line>Dias em atraso: {{reg.dias_atrasado}} dias em atraso</div>
+          <div mat-line>Valor atualizado na data de hoje: R${{reg.valor_atual}}</div>
+          <div mat-line>Valor da multa: R${{reg.Multa}}</div>
+          <table id="parcelas_tab2">
+            <tr>
+              <th>Parcela</th>
+              <th>Dias Atrasado</th>
+              <th>Valor dos Juros</th>
+              <th>Valor Total</th>              
+            </tr>
+            <tr *ngFor="let par of reg.Parcelas">
+              <td>{{par.Parcela_Numero}}</td>
+              <td>{{par.dias}}</td>
+              <td>R$ {{par.juros}}</td>
+              <td>R$ {{par.total}}</td>  
+            </tr>
+          </table>
+<!-- o Multa = 300,00 * 0,02 = 6,00
+o Juros = 4,20 -->
+        </mat-list-item>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </ng-template>
+  <ng-template #view_msg>Não ha registros de dividas!</ng-template>
+</section>
